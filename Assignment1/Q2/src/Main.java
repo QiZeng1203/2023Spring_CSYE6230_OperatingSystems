@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Main {
-    private static int ARRAY_SIZE = 1000000;
-    private static int THREAD_COUNT = 2;
+    private static int ARRAY_SIZE = 50000000;
+    private static int THREAD_COUNT = 4;
     private static int PART_SIZE = ARRAY_SIZE / THREAD_COUNT;
     private static long[] PART_SUM = new long[THREAD_COUNT];
     private static double[] ARRAY = new double[ARRAY_SIZE];
@@ -29,10 +29,9 @@ public class Main {
         System.out.println("Serial time: " + (endTime - startTime) + "ms");
 
         // Calculate the sum of the array in parallel with 4 threads
-        // startTime = System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
         double[] partialSums = new double[THREAD_COUNT];
         Thread[] threads = new Thread[THREAD_COUNT];
-        startTime = System.currentTimeMillis();
         for (int i = 0; i < THREAD_COUNT; i++) {
             final int threadIndex = i;
             threads[i] = new Thread(() -> {
@@ -54,7 +53,7 @@ public class Main {
             totalSum += partialSums[i];
         }
         endTime = System.currentTimeMillis();
-        System.out.println("Total sum: " + totalSum);
+        System.out.println("Parallel sum: " + totalSum);
         System.out.println("Parallel time: " + (endTime - startTime) + "ms");
 
     }
